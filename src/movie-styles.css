@@ -1,0 +1,117 @@
+.movie-app-bg {
+    background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+    min-height: 100vh;
+    color: white;
+}
+
+.card {
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: none;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 15px !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.36);
+}
+
+.card-img-wrapper {
+    overflow: hidden;
+    position: relative;
+    border-radius: 15px 15px 0 0 !important;
+}
+
+.card-img-top {
+    transition: all 0.5s ease;
+    height: 400px;
+    object-fit: cover;
+}
+
+.card:hover .card-img-top {
+    transform: scale(1.1) rotate(1deg);
+}
+
+.card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+}
+
+.card-body {
+    background: transparent !important;
+}
+
+.btn-details {
+    background: linear-gradient(45deg, #ff0084, #33001b);
+    border: none;
+    font-weight: bold;
+    letter-spacing: 1px;
+    transition: all 0.3s;
+}
+
+.btn-details:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(255, 0, 132, 0.3);
+}
+
+.pagination .page-item .page-link {
+    background: transparent;
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    margin: 0 5px;
+    border-radius: 50% !important;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+}
+
+.pagination .page-item.active .page-link {
+    background: linear-gradient(45deg, #12c2e9, #c471ed, #f64f59);
+    border: none;
+}
+
+.pagination .page-item .page-link:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.movie-poster {
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    transition: all 0.4s;
+    border: 5px solid rgba(255, 255, 255, 0.1);
+}
+
+.movie-poster:hover {
+    transform: scale(1.03);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.badge-gradient {
+    background: linear-gradient(45deg, #f12711, #f5af19);
+    color: white;
+    font-weight: 500;
+    padding: 8px 15px;
+    border-radius: 50px;
+}
+
+.loading-spinner {
+    width: 4rem;
+    height: 4rem;
+    border-width: 0.3em;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #0f0c29;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(#12c2e9, #c471ed);
+    border-radius: 10px;
+}

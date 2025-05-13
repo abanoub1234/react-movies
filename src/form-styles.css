@@ -1,0 +1,129 @@
+/* ستايلات ثريش وواضحة */
+
+body {
+    background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+}
+
+.form-container {
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    max-width: 500px;
+    margin: 2rem auto;
+    color: white;
+}
+
+.form-title {
+    color: #fff;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-size: 2rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.form-label {
+    color: #fff;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.form-control {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    color: #fff !important;
+    padding: 12px 15px !important;
+    border-radius: 8px !important;
+    transition: all 0.3s;
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+.form-control:focus {
+    background: rgba(255, 255, 255, 0.2) !important;
+    border-color: #4e9af1 !important;
+    box-shadow: 0 0 0 3px rgba(78, 154, 241, 0.2) !important;
+}
+
+.btn-form {
+    background: linear-gradient(135deg, #4e9af1, #3a7bd5) !important;
+    border: none !important;
+    padding: 12px !important;
+    font-weight: 600 !important;
+    font-size: 1rem;
+    border-radius: 8px !important;
+    transition: all 0.3s !important;
+    margin-top: 1rem;
+    width: 100%;
+    color: white !important;
+}
+
+.btn-form:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 5px 15px rgba(78, 154, 241, 0.4) !important;
+}
+
+
+/* ستايلات الإدخال */
+
+.input-group {
+    position: relative;
+}
+
+.input-group-text {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    color: white !important;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.input-group-text:hover {
+    background: rgba(255, 255, 255, 0.2) !important;
+}
+
+
+/* رسائل الخطأ */
+
+.is-invalid {
+    border-color: #ff6b6b !important;
+}
+
+.invalid-feedback {
+    color: #ff6b6b !important;
+    font-size: 0.85rem;
+    margin-top: 5px;
+    display: block;
+}
+
+
+/* الروابط */
+
+.form-link {
+    color: #4e9af1;
+    text-decoration: none;
+    transition: all 0.3s;
+    font-weight: 500;
+}
+
+.form-link:hover {
+    color: #3a7bd5;
+    text-decoration: underline;
+}
+
+
+/* checkbox */
+
+.form-check-input {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.form-check-label {
+    color: #fff;
+    margin-left: 5px;
+}
