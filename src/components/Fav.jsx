@@ -9,51 +9,65 @@ function Fav() {
 
   if (favs.length === 0) {
     return (
-      <div className="movie-app-bg d-flex justify-content-center align-items-center" style={{ minHeight: "70vh" }}>
-        <div className="text-center">
-          <i className="bi bi-heart text-danger" style={{ fontSize: "3rem" }}></i>
-          <h2 className="text-white mt-3">No favorites yet</h2>
-          <p className="text-light">Add movies to your favorites by clicking the heart icon</p>
-          <Link to="/home" className="btn btn-primary mt-3">
-            Browse Movies
-          </Link>
-        </div>
+      <div style={{ padding: "40px", textAlign: "center" }}>
+        <h2>No favorites yet</h2>
+        <p>Add movies to your favorites by clicking the heart icon</p>
+        <Link to="/home">Browse Movies</Link>
       </div>
     );
   }
 
   return (
-    <div className="movie-app-bg py-5">
-      <div className="container">
-        <h1 className="text-white mb-4">Your Favorites</h1>
-        <div className="row g-4">
-          {favs.map((m) => (
-            <div className="col-sm-6 col-md-4 col-lg-3" key={m.id}>
-              <div className="card h-100">
-                <Link to={`/movie/${m.id}`}>
-                  <img 
-                    src={m.poster_path ? `https://image.tmdb.org/t/p/w500/${m.poster_path}` : 'https://via.placeholder.com/500x750?text=No+Poster'} 
-                    className="card-img-top" 
-                    alt={m.title} 
-                  />
-                </Link>
-                <div className="card-body d-flex flex-column">
-                  <h5 className="card-title">{m.title}</h5>
-                  <p>{m.release_date}</p>
-                  <button 
-                    onClick={(e) => {
-                      e.preventDefault();
-                      dispatch(removeFromFav(m.id));
-                    }}
-                    className="btn btn-outline-danger mt-auto"
-                  >
-                    <i className="bi bi-heart-fill text-danger"></i> Remove
-                  </button>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+    <div style={{ padding: "40px" }}>
+      <h1 style={{ textAlign: "center", marginBottom: "30px" }}>
+        Your Favorite Movies
+      </h1>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
+          gap: "20px",
+        }}
+      >
+        {favs.map((m) => (
+          <div
+            key={m.id}
+            style={{
+              border: "1px solid #ccc",
+              padding: "10px",
+              borderRadius: "5px",
+              backgroundColor: "#f9f9f9",
+            }}
+          >
+            <Link to={`/movie/${m.id}`}>
+              <img
+                src={
+                  m.poster_path
+                    ? `https://image.tmdb.org/t/p/w500/${m.poster_path}`
+                    : "https://via.placeholder.com/200x300?text=No+Poster"
+                }
+                alt={m.title}
+                style={{ width: "100%", height: "300px", objectFit: "cover" }}
+              />
+            </Link>
+            <h3 style={{ fontSize: "16px", margin: "10px 0 5px" }}>{m.title}</h3>
+            <p style={{ fontSize: "14px", color: "#555" }}>{m.release_date}</p>
+            <button
+              onClick={() => dispatch(removeFromFav(m.id))}
+              style={{
+                marginTop: "10px",
+                padding: "5px 10px",
+                backgroundColor: "#c00",
+                color: "white",
+                border: "none",
+                cursor: "pointer",
+                fontSize: "14px",
+              }}
+            >
+              Remove
+            </button>
+          </div>
+        ))}
       </div>
     </div>
   );

@@ -3,7 +3,6 @@ import axios from "axios";
 import { useParams, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addToFav, removeFromFav } from "../redux/actions/favActions";
-import "./movie-styles.css";
 
 const IMG_BASE = "https://image.tmdb.org/t/p/w500";
 
@@ -11,13 +10,14 @@ function MovieDetails() {
   const { id } = useParams();
   const history = useHistory();
   const [movie, setMovie] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   const dispatch = useDispatch();
   const favorites = useSelector((state) => state.fav.favs);
   const isFav = favorites.some((m) => m.id === movie?.id);
 
   const toggleFavorite = () => {
+    if (!movie) return;
     if (isFav) {
       dispatch(removeFromFav(movie.id));
     } else {
@@ -25,127 +25,58 @@ function MovieDetails() {
         id: movie.id,
         title: movie.title,
         poster_path: movie.poster_path,
-        release_date: movie.release_date
+        release_date: movie.release_date,
       }));
     }
   };
 
   useEffect(() => {
-    const fetchMovie = async () => {
-      setIsLoading(true);
-      try {
-        const response = await axios.get(
-          `https://api.themoviedb.org/3/movie/${id}?api_key=29cf44b93ca83bf48d9356395476f7ad`
-        );
-        setMovie(response.data);
-      } catch (err) {
-        console.error(err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchMovie();
+    setLoading(true);
+    axios.get(`https://api.themoviedb.org/3/movie/${id}?api_key=29cf44b93ca83bf48d9356395476f7ad`)
+      .then(res => setMovie(res.data))
+      .catch(console.error)
+      .finally(() => setLoading(false));
   }, [id]);
 
-  if (isLoading)
-    return (
-      <div className="movie-app-bg d-flex justify-content-center align-items-center" style={{ minHeight: "100vh" }}>
-        <div className="text-center">
-          <div className="spinner-border loading-spinner text-primary" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </div>
-          <p className="mt-3 fs-5 text-white">Loading movie details...</p>
-        </div>
-      </div>
-    );
+  if (loading) return <div>Loading movie details...</div>;
+
+  if (!movie) return <div>Movie not found.</div>;
 
   return (
-    <div className="movie-app-bg">
-      <div className="container py-5">
-        <button
-          className="btn btn-outline-light mb-4 rounded-pill px-4 py-2"
-          onClick={() => history.goBack()}
-        >
-          <i className="bi bi-arrow-left me-2"></i> Back to Movies
-        </button>
+    <div style={{ padding: 20, maxWidth: 600, margin: "0 auto", color: "white", backgroundColor: "#333" }}>
+      <button onClick={() => history.goBack()} style={{ marginBottom: 20 }}>
+        &larr; Back
+      </button>
 
-        <div className="row g-5">
-          <div className="col-lg-4">
-            <div className="movie-poster">
-              <img
-                src={
-                  movie.poster_path
-                    ? IMG_BASE + movie.poster_path
-                    : "https://via.placeholder.com/500x750?text=No+Poster"
-                }
-                alt={movie.title}
-                className="img-fluid w-100"
-              />
-            </div>
-          </div>
-          <div className="col-lg-8">
-            <div
-              className="bg-dark p-4 p-lg-5 rounded-3 shadow-lg"
-              style={{ background: "rgba(0,0,0,0.5)" }}
-            >
-              <h1 className="display-3 fw-bold mb-4 text-white">{movie.title}</h1>
+      <h1>{movie.title}</h1>
 
-              <div className="d-flex flex-wrap gap-3 mb-4">
-                <span className="badge-gradient">
-                  <i className="bi bi-star-fill me-2"></i>
-                  {movie.vote_average.toFixed(1)}/10
-                </span>
-                <span className="badge-gradient" style={{ background: "linear-gradient(45deg, #00c6ff, #0072ff)" }}>
-                  <i className="bi bi-clock me-2"></i>
-                  {Math.floor(movie.runtime / 60)}h {movie.runtime % 60}m
-                </span>
-                <span className="badge-gradient" style={{ background: "linear-gradient(45deg, #56ab2f, #a8e063)" }}>
-                  <i className="bi bi-calendar3 me-2"></i>
-                  {new Date(movie.release_date).getFullYear()}
-                </span>
-              </div>
+      <img
+        src={movie.poster_path ? IMG_BASE + movie.poster_path : "https://via.placeholder.com/500x750?text=No+Poster"}
+        alt={movie.title}
+        style={{ width: "100%", borderRadius: 8 }}
+      />
 
-              <div className="mb-4">
-                <h3 className="fw-bold mb-3 text-white">Overview</h3>
-                <p className="lead text-light">{movie.overview || "No overview available."}</p>
-              </div>
+      <p>Rating: {movie.vote_average.toFixed(1)} / 10</p>
+      <p>Duration: {Math.floor(movie.runtime / 60)}h {movie.runtime % 60}m</p>
+      <p>Year: {new Date(movie.release_date).getFullYear()}</p>
 
-              {movie.genres?.length > 0 && (
-                <div className="mb-4">
-                  <h3 className="fw-bold mb-3 text-white">Genres</h3>
-                  <div className="d-flex flex-wrap gap-2">
-                    {movie.genres.map((g) => (
-                      <span
-                        key={g.id}
-                        className="badge-gradient"
-                        style={{ background: "linear-gradient(45deg, #6a11cb, #2575fc)" }}
-                      >
-                        {g.name}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              )}
+      <h3>Overview</h3>
+      <p>{movie.overview || "No overview available."}</p>
 
-              <div className="d-flex flex-wrap gap-3 mt-5">
-                <button 
-                  onClick={toggleFavorite} 
-                  className={`btn ${isFav ? 'btn-danger' : 'btn-outline-danger'} rounded-pill px-4 py-2`}
-                >
-                  <i className={`bi ${isFav ? "bi-heart-fill" : "bi-heart"} me-2`}></i>
-                  {isFav ? "Remove from Favorites" : "Add to Favorites"}
-                </button>
-                <button className="btn btn-primary rounded-pill px-4 py-2">
-                  <i className="bi bi-play-fill me-2"></i> Watch Trailer
-                </button>
-                <button className="btn btn-outline-light rounded-pill px-4 py-2">
-                  <i className="bi bi-share me-2"></i> Share
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      {movie.genres?.length > 0 && (
+        <>
+          <h3>Genres</h3>
+          <ul>
+            {movie.genres.map(g => (
+              <li key={g.id}>{g.name}</li>
+            ))}
+          </ul>
+        </>
+      )}
+
+      <button onClick={toggleFavorite} style={{ marginTop: 20, padding: "10px 20px" }}>
+        {isFav ? "Remove from Favorites" : "Add to Favorites"}
+      </button>
     </div>
   );
 }

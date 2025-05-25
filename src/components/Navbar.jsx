@@ -8,79 +8,42 @@ function Navbar() {
   const favCount = useSelector((state) => state.fav.favs.length);
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
+    const onScroll = () => {
+      setScrolled(window.scrollY > 50);
     };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   return (
-    <nav className={`navbar navbar-expand-lg navbar-custom fixed-top ${scrolled ? 'scrolled' : ''}`}>
-      <div className="container">
-        <NavLink className="navbar-brand navbar-brand-custom" to="/home">
-          Movie<span style={{ color: '#fff' }}>Hub</span>
+    <nav className={`navbar-custom ${scrolled ? 'scrolled' : ''}`}>
+      <div className="navbar-container">
+        <NavLink  to="/home">
+          Films Community
         </NavLink>
-        
-        <button
-          className="navbar-toggler navbar-toggler-custom"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#mainNavbar"
-          aria-controls="mainNavbar"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon navbar-toggler-icon-custom" />
-        </button>
 
-        <div className="collapse navbar-collapse" id="mainNavbar">
-          <ul className="navbar-nav ms-auto">
-            <li className="nav-item">
-              <NavLink
-                exact
-                className="nav-link nav-link-custom"
-                activeClassName="active"
-                to="/home"
-              >
-                <i className="bi bi-house-door me-1"></i> Home
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink
-                exact
-                className="nav-link nav-link-custom"
-                activeClassName="active"
-                to="/register"
-              >
-                <i className="bi bi-person-plus me-1"></i> Register
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink
-                exact
-                className="nav-link nav-link-custom"
-                activeClassName="active"
-                to="/login"
-              >
-                <i className="bi bi-box-arrow-in-right me-1"></i> Login
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink className="nav-link nav-link-custom" to="/favorites">
-                <i className="bi bi-heart me-1"></i> Favorites
-                {favCount > 0 && (
-                  <span className="badge bg-danger ms-1">{favCount}</span>
-                )}
-              </NavLink>
-            </li>
-          </ul>
-        </div>
+        <ul className="navbar-links">
+          <li>
+            <NavLink to="/home" className="nav-link-custom" activeClassName="active" exact>
+              Home
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/register" className="nav-link-custom" activeClassName="active" exact>
+              Register
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/login" className="nav-link-custom" activeClassName="active" exact>
+              Login
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/favorites" className="nav-link-custom" exact>
+              Favorites {favCount > 0 && <span className="badge">{favCount}</span>}
+            </NavLink>
+          </li>
+        </ul>
       </div>
     </nav>
   );

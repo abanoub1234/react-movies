@@ -1,113 +1,79 @@
-// LoginForm.js
 import { useState } from "react";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import "./form-styles.css";
+import { useHistory } from "react-router-dom";
+
 function LoginForm() {
   const history = useHistory();
-
-  
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-
-  const [errEmail, setErrEmail] = useState("");
-  const [errPassword, setErrPassword] = useState("");
-
-  
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleForm = (e) => {
-    const { name, value } = e.target;
-
-    if (name === "email") {
-      setEmail(value);
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      setErrEmail(
-        !value.trim()
-          ? "Email is required"
-          : !emailRegex.test(value)
-          ? "Invalid email format"
-          : ""
-      );
-    }
-
-    if (name === "password") {
-      setPassword(value);
-      setErrPassword(
-        !value
-          ? "Password is required"
-          : value.length < 8
-          ? "Password must be at least 8 characters"
-          : ""
-      );
-    }
+  const validate = () => {
+    if (!email.trim()) return "Email is required";
+    if (!/\S+@\S+\.\S+/.test(email)) return "Invalid email format";
+    if (!password) return "Password is required";
+    if (password.length < 8) return "Password must be at least 8 characters";
+    return "";
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-   
-    if (errEmail || errPassword || !email.trim() || !password) {
-      alert("Please fix all errors before submitting.");
+    const errMsg = validate();
+    if (errMsg) {
+      setError(errMsg);
       return;
     }
-     history.push("/home");
+    setError("");
+    history.push("/home");
   };
 
-  return ( <div className="form-container">
-            <h2 className="form-title">Welcome Back</h2>
-            <form onSubmit={handleSubmit} noValidate>
-                
-                <div className="mb-4">
-                    <label className="form-label">Email Address</label>
-                    <input
-                        type="email"
-                        name="email"
-                        value={email}
-                        onChange={handleForm}
-                        className={`form-control ${errEmail ? "is-invalid" : email ? "is-valid" : ""}`}
-                        placeholder="your@email.com"
-                    />
-                    {errEmail && <div className="invalid-feedback">{errEmail}</div>}
-                </div>
-
-               
-                <div className="mb-4">
-                    <label className="form-label">Password</label>
-                    <div className="input-group">
-                        <input
-                            type={showPassword ? "text" : "password"}
-                            name="password"
-                            value={password}
-                            onChange={handleForm}
-                            className={`form-control ${errPassword ? "is-invalid" : password ? "is-valid" : ""}`}
-                            placeholder="Enter your password"
-                        />
-                        <button
-                            type="button"
-                            className="btn btn-outline-secondary input-group-text"
-                            onClick={() => setShowPassword(!showPassword)}
-                        >
-                            {showPassword ? "Hide" : "Show"}
-                        </button>
-                    </div>
-                    {errPassword && <div className="invalid-feedback d-block">{errPassword}</div>}
-                </div>
-
-            
-          
-                <button
-                    type="submit"
-                    className="btn btn-primary btn-form w-100"
-                    disabled={errEmail || errPassword || !email.trim() || !password}
-                >
-                    Login
-                </button>
-
-                <div className="text-center mt-3">
-                    <a href="/register" className="form-link">Don't have an account? Register</a>
-                </div>
-            </form>
+  return (
+    <div style={{ maxWidth: "300px", margin: "50px auto", padding: "20px", border: "1px solid #ccc" }}>
+      <h2>Login</h2>
+      <form onSubmit={handleSubmit} noValidate>
+        <div style={{ marginBottom: "10px" }}>
+          <label>Email:</label>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            style={{ width: "100%", padding: "6px" }}
+            placeholder="your@email.com"
+          />
         </div>
-    );
+
+        <div style={{ marginBottom: "10px" }}>
+          <label>Password:</label>
+          <div style={{ display: "flex" }}>
+            <input
+              type={showPassword ? "text" : "password"}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              style={{ flex: 1, padding: "6px" }}
+              placeholder="Enter your password"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              style={{ marginLeft: "5px" }}
+            >
+              {showPassword ? "Hide" : "Show"}
+            </button>
+          </div>
+        </div>
+
+        {error && <p style={{ color: "red" }}>{error}</p>}
+
+        <button type="submit" style={{ width: "100%", padding: "8px" }}>
+          Login
+        </button>
+      </form>
+
+      <p style={{ marginTop: "15px", textAlign: "center" }}>
+        Don't have an account? <a href="/register">Register</a>
+      </p>
+    </div>
+  );
 }
+
 export default LoginForm;

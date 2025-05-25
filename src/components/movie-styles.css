@@ -1,117 +1,104 @@
 .movie-app-bg {
-    background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
-    min-height: 100vh;
-    color: white;
+  background-color: #24243e;
+  min-height: 100vh;
+  color: white;
+  padding: 20px;
+  font-family: Arial, sans-serif;
 }
 
 .card {
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    border: none;
-    overflow: hidden;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border-radius: 15px !important;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.36);
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 20px;
 }
 
 .card-img-wrapper {
-    overflow: hidden;
-    position: relative;
-    border-radius: 15px 15px 0 0 !important;
+  overflow: hidden;
+  border-radius: 10px 10px 0 0;
 }
 
 .card-img-top {
-    transition: all 0.5s ease;
-    height: 400px;
-    object-fit: cover;
-}
-
-.card:hover .card-img-top {
-    transform: scale(1.1) rotate(1deg);
-}
-
-.card:hover {
-    transform: translateY(-10px) scale(1.02);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  display: block;
 }
 
 .card-body {
-    background: transparent !important;
+  background: transparent;
+  padding: 10px 0;
 }
 
 .btn-details {
-    background: linear-gradient(45deg, #ff0084, #33001b);
-    border: none;
-    font-weight: bold;
-    letter-spacing: 1px;
-    transition: all 0.3s;
-}
-
-.btn-details:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 20px rgba(255, 0, 132, 0.3);
+  background-color: #33001b;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 5px;
 }
 
 .pagination .page-item .page-link {
-    background: transparent;
-    color: white;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    margin: 0 5px;
-    border-radius: 50% !important;
-    width: 45px;
-    height: 45px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s;
+  background: transparent;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  margin: 0 5px;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 }
 
 .pagination .page-item.active .page-link {
-    background: linear-gradient(45deg, #12c2e9, #c471ed, #f64f59);
-    border: none;
-}
-
-.pagination .page-item .page-link:hover {
-    background: rgba(255, 255, 255, 0.1);
+  background-color: #c471ed;
+  border: none;
+  color: white;
 }
 
 .movie-poster {
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-    transition: all 0.4s;
-    border: 5px solid rgba(255, 255, 255, 0.1);
-}
-
-.movie-poster:hover {
-    transform: scale(1.03);
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
-    border-color: rgba(255, 255, 255, 0.3);
+  border-radius: 15px;
+  width: 100%;
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  display: block;
 }
 
 .badge-gradient {
-    background: linear-gradient(45deg, #f12711, #f5af19);
-    color: white;
-    font-weight: 500;
-    padding: 8px 15px;
-    border-radius: 50px;
+  background-color: #f5af19;
+  color: white;
+  font-weight: 500;
+  padding: 5px 12px;
+  border-radius: 25px;
+  display: inline-block;
 }
 
 .loading-spinner {
-    width: 4rem;
-    height: 4rem;
-    border-width: 0.3em;
+  width: 3rem;
+  height: 3rem;
+  border: 0.3em solid white;
+  border-top: 0.3em solid transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
 }
 
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Simple scrollbar styling */
 ::-webkit-scrollbar {
-    width: 10px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-    background: #0f0c29;
+  background: #24243e;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: linear-gradient(#12c2e9, #c471ed);
-    border-radius: 10px;
+  background: #c471ed;
+  border-radius: 8px;
 }
