@@ -1,24 +1,29 @@
+import React from 'react';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import HomePage from './components/HomePage';
+import MovieDetails from './components/MovieDetails';
+import Fav from './components/Fav';
+import LoginForm from './components/LoginForm';
+import RegisterForm from './components/RegisterForm';
+import './App.css';
 
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
-
-
-import Navbar        from './Navbar';
-import HomePage      from './HomePage';
-import LoginForm     from './LoginForm';
-import RegisterForm  from './RegisterForm';
-import MovieDetails from './MovieDetails';
 function App() {
   return (
-    <BrowserRouter>
-      <Navbar />
-
-      <Switch>
-        <Route exact path="/register" component={RegisterForm} />
-        <Route exact path="/login"    component={LoginForm}    />
-        <Route exact path="/home"     component={HomePage}     />
-         <Route exact path="/movie/:id" component={MovieDetails}  />
-      </Switch>
-    </BrowserRouter>
+    <Router>
+      <div className="App">
+        <Navbar />
+        <Switch>
+          <Route exact path="/" component={HomePage} />
+          <Route exact path="/home" component={HomePage} />
+          <Route exact path="/movie/:id" component={MovieDetails} />
+          <Route exact path="/favorites" component={Fav} />
+          <Route exact path="/login" component={LoginForm} />
+          <Route exact path="/register" component={RegisterForm} />
+          <Redirect to="/" /> {/* Fallback redirect */}
+        </Switch>
+      </div>
+    </Router>
   );
 }
 

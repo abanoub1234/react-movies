@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import './navbar-styles.css';
 
 function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const favCount = useSelector((state) => state.fav.favs.length);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -21,7 +23,7 @@ function Navbar() {
   return (
     <nav className={`navbar navbar-expand-lg navbar-custom fixed-top ${scrolled ? 'scrolled' : ''}`}>
       <div className="container">
-        <NavLink className="navbar-brand navbar-brand-custom" to="/">
+        <NavLink className="navbar-brand navbar-brand-custom" to="/home">
           Movie<span style={{ color: '#fff' }}>Hub</span>
         </NavLink>
         
@@ -70,13 +72,11 @@ function Navbar() {
               </NavLink>
             </li>
             <li className="nav-item">
-              <NavLink
-                exact
-                className="nav-link nav-link-custom"
-                activeClassName="active"
-                to="/favorites"
-              >
+              <NavLink className="nav-link nav-link-custom" to="/favorites">
                 <i className="bi bi-heart me-1"></i> Favorites
+                {favCount > 0 && (
+                  <span className="badge bg-danger ms-1">{favCount}</span>
+                )}
               </NavLink>
             </li>
           </ul>

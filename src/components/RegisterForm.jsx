@@ -4,21 +4,20 @@ import "./form-styles.css";
 function RegisterForm() {
     const history = useHistory();
 
-    // form fields
+   
     const [name, setName] = useState("");
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
 
-    // error messages
+    
     const [errName, setErrName] = useState("");
     const [errUsername, setErrUsername] = useState("");
     const [errEmail, setErrEmail] = useState("");
     const [errPassword, setErrPassword] = useState("");
     const [errConfirmPassword, setErrConfirmPassword] = useState("");
 
-    // show/hide password
     const [showPassword, setShowPassword] = useState(false);
 
     const handleForm = (e) => {
@@ -56,7 +55,7 @@ function RegisterForm() {
                 !/[@*%$#]/.test(value) ? "Must include at least one special character (@ * % $ #)" :
                 "";
             setErrPassword(pwdErr);
-            // re-validate confirm if already entered
+           
             if (confirmPassword) {
                 setErrConfirmPassword(
                     confirmPassword !== value ? "Passwords do not match" : ""
@@ -82,7 +81,7 @@ function RegisterForm() {
             alert("Please fix all errors before submitting.");
             return;
         }
-        // success: redirect
+       
         history.push("/login");
     };
 
@@ -91,7 +90,7 @@ function RegisterForm() {
             <h2 className="form-title">Create Account</h2>
             <form onSubmit={handleSubmit} noValidate>
 
-                {/* Name */}
+               
                 <div className="mb-4">
                     <label className="form-label">Full Name</label>
                     <input
@@ -105,7 +104,7 @@ function RegisterForm() {
                     {errName && <div className="invalid-feedback">{errName}</div>}
                 </div>
 
-                {/* Username */}
+                
                 <div className="mb-4">
                     <label className="form-label">Username</label>
                     <input
@@ -119,7 +118,7 @@ function RegisterForm() {
                     {errUsername && <div className="invalid-feedback">{errUsername}</div>}
                 </div>
 
-                {/* Email */}
+               
                 <div className="mb-4">
                     <label className="form-label">Email Address</label>
                     <input
@@ -133,7 +132,7 @@ function RegisterForm() {
                     {errEmail && <div className="invalid-feedback">{errEmail}</div>}
                 </div>
 
-                {/* Password */}
+              
                 <div className="mb-4">
                     <label className="form-label">Password</label>
                     <div className="input-group">
@@ -156,7 +155,7 @@ function RegisterForm() {
                     {errPassword && <div className="invalid-feedback d-block">{errPassword}</div>}
                 </div>
 
-                {/* Confirm Password */}
+          
                 <div className="mb-4">
                     <label className="form-label">Confirm Password</label>
                     <input
@@ -170,7 +169,6 @@ function RegisterForm() {
                     {errConfirmPassword && <div className="invalid-feedback">{errConfirmPassword}</div>}
                 </div>
 
-                {/* Submit */}
                 <button
                     type="submit"
                     className="btn btn-primary btn-form w-100"

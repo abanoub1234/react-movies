@@ -5,15 +5,15 @@ import "./form-styles.css";
 function LoginForm() {
   const history = useHistory();
 
-  // form fields
+  
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  // error messages
+
   const [errEmail, setErrEmail] = useState("");
   const [errPassword, setErrPassword] = useState("");
 
-  // show/hide password
+  
   const [showPassword, setShowPassword] = useState(false);
 
   const handleForm = (e) => {
@@ -45,7 +45,7 @@ function LoginForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // final validation check
+   
     if (errEmail || errPassword || !email.trim() || !password) {
       alert("Please fix all errors before submitting.");
       return;
@@ -56,7 +56,7 @@ function LoginForm() {
   return ( <div className="form-container">
             <h2 className="form-title">Welcome Back</h2>
             <form onSubmit={handleSubmit} noValidate>
-                {/* Email */}
+                
                 <div className="mb-4">
                     <label className="form-label">Email Address</label>
                     <input
@@ -70,7 +70,7 @@ function LoginForm() {
                     {errEmail && <div className="invalid-feedback">{errEmail}</div>}
                 </div>
 
-                {/* Password */}
+               
                 <div className="mb-4">
                     <label className="form-label">Password</label>
                     <div className="input-group">
@@ -94,7 +94,7 @@ function LoginForm() {
                 </div>
 
             
-                {/* Submit */}
+          
                 <button
                     type="submit"
                     className="btn btn-primary btn-form w-100"

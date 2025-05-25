@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import MyCard from "./MyCard";
 import "./movie-styles.css";
+import { useSelector } from "react-redux";
 
 const TMDB_POPULAR_URL = "https://api.themoviedb.org/3/movie/popular?api_key=29cf44b93ca83bf48d9356395476f7ad";
 
@@ -10,6 +11,7 @@ function HomePage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
+  const favs = useSelector((state) => state.fav.favs);
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -38,7 +40,7 @@ function HomePage() {
     <div className="movie-app-bg py-5">
       <div className="container">
         <div className="text-center mb-5">
-          <h1 className="display-3 fw-bold text-white mb-3">Trending Movies </h1>
+          <h1 className="display-3 fw-bold text-white mb-3">Trending Movies</h1>
           <p className="lead text-light opacity-75">Discover the hottest movies right now</p>
         </div>
 
@@ -52,16 +54,21 @@ function HomePage() {
         ) : (
           <>
             <div className="row g-4">
-              {movies.map((m) => (
-                <div key={m.id} className="col-sm-6 col-md-4 col-lg-3">
-                  <MyCard
-                    img={m.poster_path}
-                    title={m.title}
-                    release_date={m.release_date}
-                    page={`/movie/${m.id}`}
-                  />
-                </div>
-              ))}
+              {movies.map((m) => {
+                const isFav = favs.some((fav) => fav.id === m.id);
+                return (
+                  <div key={m.id} className="col-sm-6 col-md-4 col-lg-3">
+                    <MyCard
+                      id={m.id}
+                      img={m.poster_path}
+                      title={m.title}
+                      release_date={m.release_date}
+                      page={`/movie/${m.id}`}
+                      isFav={isFav}
+                    />
+                  </div>
+                );
+              })}
             </div>
 
             {totalPages > 1 && (
@@ -71,6 +78,7 @@ function HomePage() {
                     <button 
                       className="page-link" 
                       onClick={() => handlePageChange(1)}
+                      aria-label="First"
                     >
                       <i className="bi bi-chevron-double-left"></i>
                     </button>
@@ -79,10 +87,18 @@ function HomePage() {
                     <button 
                       className="page-link" 
                       onClick={() => handlePageChange(currentPage - 1)}
+                      aria-label="Previous"
                     >
                       <i className="bi bi-chevron-left"></i>
                     </button>
                   </li>
+                  
+                  {/* Show first page, current range, and last page */}
+                  {currentPage > 3 && (
+                    <li className="page-item disabled">
+                      <span className="page-link">...</span>
+                    </li>
+                  )}
                   
                   {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
                     let pageNum;
@@ -111,10 +127,17 @@ function HomePage() {
                     );
                   })}
                   
+                  {currentPage < totalPages - 2 && (
+                    <li className="page-item disabled">
+                      <span className="page-link">...</span>
+                    </li>
+                  )}
+                  
                   <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
                     <button 
                       className="page-link" 
                       onClick={() => handlePageChange(currentPage + 1)}
+                      aria-label="Next"
                     >
                       <i className="bi bi-chevron-right"></i>
                     </button>
@@ -123,6 +146,7 @@ function HomePage() {
                     <button 
                       className="page-link" 
                       onClick={() => handlePageChange(totalPages)}
+                      aria-label="Last"
                     >
                       <i className="bi bi-chevron-double-right"></i>
                     </button>
